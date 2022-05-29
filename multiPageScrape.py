@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 url = "https://www.keychron.uk/collections/new-arrivals"
 response = requests.get(url)
 soup = BeautifulSoup(response.text, 'lxml')
-priceFile = open('priceFile', 'w')
+priceFile = open('priceFile.txt', 'w')
 
 itemsContent = soup.find_all('div', class_='grid-product__content')
 itemPrice = soup.find_all('div', class_='grid-product__price')
