@@ -1,11 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
-url = "https://www.keychron.uk/collections/keychron-uk-iso-layout-keyboards"
-# url = "https://www.keychron.uk/collections/new-arrivals"
+# url = "https://www.keychron.uk/collections/keychron-uk-iso-layout-keyboards"
+url = "https://www.keychron.uk/collections/new-arrivals"
 response = requests.get(url)
 soup = BeautifulSoup(response.text, 'lxml')
+priceFile = open('priceFile', 'w')
 
-# items = soup.find_all('div', class_='grid__item grid-product small--one-half medium-up--one-quarter grid-product__has-quick-shop aos-init aos-animate')
 itemsContent = soup.find_all('div', class_='grid-product__content')
 itemPrice = soup.find_all('div', class_='grid-product__price')
 ogPrice = itemPrice[1].find('span', class_='grid-product__price--original')
@@ -25,7 +25,14 @@ for i in range(len(itemsContent)):
     if price.find('span', class_='sale-price') != None:
         sale = price.find('span', class_='sale-price').text.strip()
         og = price.find('span', class_='grid-product__price--original').text
-        print("Sale price: %s, original price: %s" % (sale, og))
+        saleString = "\n Sale price: %s, original price: %s \n" % (sale, og)
+        print(saleString)
+        priceFile.write(itemName)
+        priceFile.write(saleString)
+
     else:
         normalPrice = price.text.strip()
-        print("Regular Price: %s" % (normalPrice))
+        normalString = "\n Regular Price: %s \n" % (normalPrice)
+        print(normalString)
+        priceFile.write(itemName)
+        priceFile.write(normalString)
