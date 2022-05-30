@@ -42,30 +42,29 @@ for i in range(len(links)):
             urls.append(x)
 print(urls)
 
+count = 1
 for i in urls:
     newUrl = url + i
     response = requests.get(newUrl)
     soup = BeautifulSoup(response.text, 'lxml')
-
     itemsContent = soup.find_all('div', class_='grid-product__content')
     itemPrice = soup.find_all('div', class_='grid-product__price')
-
     for j in range(len(itemsContent)):
         itemName = itemsContent[j].find(
             'div', class_='grid-product__title').text
-        print(itemName)
         price = itemPrice[j]
         if price.find('span', class_='sale-price') != None:
             sale = price.find('span', class_='sale-price').text.strip()
             og = price.find(
                 'span', class_='grid-product__price--original').text
-            saleString = "\nSale price: %s, original price: %s\n" % (sale, og)
+            saleString = "%s | Sale price: %s | Original price: %s | %s\n" % (
+                count, sale, og, itemName)
             print(saleString)
-            priceFile.write(itemName)
             priceFile.write(saleString)
         else:
             normalPrice = price.text.strip()
-            normalString = "\nRegular Price: %s\n" % (normalPrice)
+            normalString = "%s | Regular Price: %s | %s\n" % (
+                count, normalPrice, itemName)
             print(normalString)
-            priceFile.write(itemName)
             priceFile.write(normalString)
+        count += 1
