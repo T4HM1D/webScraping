@@ -15,17 +15,12 @@ priceFile = open('priceFile.txt', 'w')
 #     if price.find('span', class_='sale-price') != None:
 #         sale = price.find('span', class_='sale-price').text.strip()
 #         og = price.find('span', class_='grid-product__price--original').text
-#         saleString = "\nSale price: %s, original price: %s\n" % (sale, og)
+#         saleString = "Sale price: %s, original price: %s" % (sale, og)
 #         print(saleString)
-#         priceFile.write(itemName)
-#         priceFile.write(saleString)
-
 #     else:
 #         normalPrice = price.text.strip()
-#         normalString = "\nRegular Price: %s\n" % (normalPrice)
+#         normalString = "Regular Price: %s" % (normalPrice)
 #         print(normalString)
-#         priceFile.write(itemName)
-#         priceFile.write(normalString)
 
 
 pages = soup.find('div', class_='pagination')
@@ -37,11 +32,8 @@ for i in range(len(links)):
         pageNum = int(tag.text) if tag.text.isdigit() else None
         if pageNum != None:
             split = tag.get('href').split('products')
-            print(split)
             x = split[-1]
             urls.append(x)
-print(urls)
-
 count = 1
 for i in urls:
     newUrl = url + i
@@ -68,3 +60,5 @@ for i in urls:
             print(normalString)
             priceFile.write(normalString)
         count += 1
+
+priceFile.close()
