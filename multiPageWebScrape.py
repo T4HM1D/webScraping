@@ -54,7 +54,7 @@ for i in urls:
         itemName = itemsContent[j].find(
             'div', class_='grid-product__title').text
         print(itemName)
-        price = itemPrice[i]
+        price = itemPrice[j]
         if price.find('span', class_='sale-price') != None:
             sale = price.find('span', class_='sale-price').text.strip()
             og = price.find(
