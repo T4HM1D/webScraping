@@ -69,4 +69,3 @@ def scrape(url,writeFileName):
 								count+=1
 
 scrape(url,file)
-scrape(url2,file2)
