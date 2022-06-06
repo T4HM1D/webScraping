@@ -49,14 +49,12 @@ for i in urls:
             sale = price.find('span', class_='sale-price').text.strip()
             og = price.find(
                 'span', class_='grid-product__price--original').text
-            saleString = "%s | Sale price: %s | Original price: %s | %s\n" % (
-                count, sale, og, itemName)
+            saleString = f"{str(count).zfill(2)} | Sale price: {sale} | Original price: {og} | {itemName}\n"
             print(saleString)
             priceFile.write(saleString)
         else:
             normalPrice = price.text.strip()
-            normalString = "%s | Regular Price: %s | %s\n" % (
-                count, normalPrice, itemName)
+            normalString = f"{str(count).zfill(2)} | Regular Price: {normalPrice} | {itemName}\n"
             print(normalString)
             priceFile.write(normalString)
         count += 1
