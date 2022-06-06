@@ -42,21 +42,21 @@ for i in urls:
     itemsContent = soup.find_all('div', class_='grid-product__content')
     itemPrice = soup.find_all('div', class_='grid-product__price')
     for j in range(len(itemsContent)):
-        itemName = itemsContent[j].find(
-            'div', class_='grid-product__title').text
-        price = itemPrice[j]
-        if price.find('span', class_='sale-price') != None:
-            sale = price.find('span', class_='sale-price').text.strip()
-            og = price.find(
-                'span', class_='grid-product__price--original').text
-            saleString = f"{str(count).zfill(2)} | Sale price: {sale} | Original price: {og} | {itemName}\n"
-            print(saleString)
-            priceFile.write(saleString)
-        else:
-            normalPrice = price.text.strip()
-            normalString = f"{str(count).zfill(2)} | Regular Price: {normalPrice} | {itemName}\n"
-            print(normalString)
-            priceFile.write(normalString)
-        count += 1
+        if (itemsContent[j].find('div',class_='grid-product__tag grid-product__tag--sold-out')) is None:
+            itemName = itemsContent[j].find('div', class_='grid-product__title').text
+            price = itemPrice[j]
+            if price.find('span', class_='sale-price') != None:
+                sale = price.find('span', class_='sale-price').text.strip()
+                og = price.find(
+                    'span', class_='grid-product__price--original').text
+                saleString = f"{str(count).zfill(2)} | Sale price: {sale} | Original price: {og} | {itemName}\n"
+                print(saleString)
+                priceFile.write(saleString)
+            else:
+                normalPrice = price.text.strip()
+                normalString = f"{str(count).zfill(2)} | Regular Price: {normalPrice} | {itemName}\n"
+                print(normalString)
+                priceFile.write(normalString)
+            count += 1
 
 priceFile.close()
